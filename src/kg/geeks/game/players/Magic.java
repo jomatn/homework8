@@ -18,6 +18,7 @@ public class Magic extends Hero {
     public void applySuperPower(Boss boss, Hero[] heroes) {
         for (Hero hero : heroes) {
             hero.setDamage(hero.getDamage() + this.boostDamage);
+            System.out.println(this.getName() + " increased damage of " + hero.getName() + " to 25"  );
         }
     }
 }

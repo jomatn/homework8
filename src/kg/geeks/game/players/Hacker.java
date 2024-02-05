@@ -1,34 +1,39 @@
 package kg.geeks.game.players;
+
 import kg.geeks.game.players.logic.RPG_Game;
 
 import java.util.Random;
 
 public class Hacker extends Hero {
-    private Hero[] heroes;
+    private int stolenHealth = 25;
     private Random random;
-    private int stolenHealth;
+    private int roundsCounter = 0; // Счетчик раундов
 
     public Hacker(int health, int damage, String name) {
-        super(health, damage, SuperAbility.STEAL_HEALTH, name);
-        this.heroes = new Hero[5];
+        super(health, damage, SuperAbility.BOOST, name);
         this.random = new Random();
-        this.stolenHealth = RPG_Game.random.nextInt(10) + 1;  // N-ое количество здоровья
+    }
 
-        // Заполняем массив героев объектами Hero
-        for (int i = 0; i < heroes.length; i++) {
+    public void applySuperPower(Boss boss, Hero[] heroes) {
+        roundsCounter++; // Увеличиваем счетчик раундов
+
+        // Если прошел один раунд
+        if (roundsCounter == 1) {
+            // Выбираем случайного героя из массива heroes
+            Hero randomHero = getOneOfHeroes(heroes);
+
+            // Передаем здоровье выбранному герою
+            boss.setHealth(boss.getHealth() - stolenHealth);
+            randomHero.setHealth(randomHero.getHealth() + stolenHealth);
+
+            System.out.println(this.getName() + " stole " + stolenHealth + " health from Boss and gave it to " + randomHero.getName());
+
+            // Сбрасываем счетчик раундов
+            roundsCounter = 0;
         }
     }
 
-    @Override
-    public void applySuperPower(Boss boss, Hero[] heroes) {
-        boss.setHealth(boss.getHealth() - stolenHealth);
-        Hero randomHero = getOneOfHeroes();
-        randomHero.setHealth(randomHero.getHealth() + stolenHealth);
-
-        System.out.println(this.getName() + " stole " + stolenHealth + " health from Boss and gave it to " + randomHero.getName());
-    }
-
-    public Hero getOneOfHeroes() {
+    private Hero getOneOfHeroes(Hero[] heroes) {
         int randomIndex = random.nextInt(heroes.length);
         return heroes[randomIndex];
     }

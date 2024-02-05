@@ -18,11 +18,10 @@ public class RPG_Game {
         Medic doc = new Medic(250, 5, 15, "Aibolit");
         Medic assistant = new Medic(300, 5, 5, "Junior");
         Witcher witcher = new Witcher(300,0,300,"Luke");
-        Hacker hacker = new Hacker(300,0,"Hacker");
-        Hero[] heroes = {warrior1, warrior2, magic, doc, berserk, assistant, witcher,hacker};
+        Hacker hacker = new Hacker(300,1,"hacker");
+        Hero[] heroes = {warrior1, warrior2, magic, doc, berserk, assistant, witcher, hacker};
         showStatistics(boss, heroes);
-        while (!isGameOver(boss, heroes)) {
-            playRound(boss, heroes);
+            while (!isGameOver(boss, heroes)) { playRound(boss, heroes);
         }
     }
 
